@@ -8,7 +8,12 @@ body {
   color: var(--text-color);
   transition: all 0.25s ease-in-out;
 }
-h1 {
+h1,
+h2,
+h3,
+h4,
+h5,
+button {
   margin: 0;
 }
 
@@ -21,9 +26,9 @@ a {
   box-sizing: border-box;
 }
 
-/* LIGHT MODE */
 :root {
   --border-radius: 12px;
+  /* --error: #ff0033; */
 }
 
 /* LIGHT MODE */
@@ -36,6 +41,7 @@ body[data-theme='light'] {
   --label-text: rgba(0, 0, 0, 0.5);
   --input-border: rgba(0, 0, 0, 0.25);
   --card-shadow: rgba(0, 0, 0, 0.1);
+  --error: #dd002c;
 }
 
 /* DARK MODE */
@@ -48,4 +54,5 @@ body[data-theme='dark'] {
   --label-text: rgba(255, 255, 255, 0.5);
   --input-border: rgba(255, 255, 255, 0.25);
   --card-shadow: rgba(255, 255, 255, 0.1);
+  --error: #ff4a6f;
 }

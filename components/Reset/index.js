@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import styles from './form.module.css';
+import styles from './reset.module.css';
 import { useState, useEffect } from 'react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import svg from '../../public/kidsloop_min_logo.svg';
@@ -9,20 +9,10 @@ import svg from '../../public/kidsloop_min_logo.svg';
 import useForm from '../../hooks/useForm';
 import validateForm from '../../utils/validateForm';
 
-import { useTranslation } from 'next-i18next';
-
-export default function Form() {
-  const {
-    t,
-    i18n: { changeLanguage }
-  } = useTranslation();
-
+export default function Reset() {
   const [isLoading, setIsLoading] = useState(false);
   const { handleChange, handleSubmit, inputs, errors } = useForm(setIsLoading, validateForm);
   const [isDarkMode, setIsDarkMode] = useState(false);
-
-  // CHANGE LANGUAGE
-  const handleSelectChange = (e) => changeLanguage(e.target.value);
 
   // CHANGE THEME
   useEffect(() => {
@@ -38,10 +28,10 @@ export default function Form() {
           <div className={styles.imgContainer}>
             <Image width={75} height={65} src={svg} alt='Logo' />
           </div>
-          <h1 className={styles.title}>{t('signin')}</h1>
+          <h1 className={styles.title}>Reset Password</h1>
           <input
             type='text'
-            placeholder={t('email')}
+            placeholder='Email or Phone'
             className={styles.email}
             name='emailPhone'
             value={inputs.emailPhone}
@@ -51,7 +41,7 @@ export default function Form() {
           {errors.emailPhone && <div className={styles.errors}>{errors.emailPhone}</div>}
           <input
             type='password'
-            placeholder={t('password')}
+            placeholder='Password'
             className={styles.password}
             name='password'
             value={inputs.password}
@@ -61,15 +51,15 @@ export default function Form() {
           {errors.password && <div className={styles.errors}>{errors.password}</div>}
           <div className={styles.btnContainer}>
             <Link href='/forgot_password'>
-              <a>{t('forgot')}</a>
+              <a>Already a user? Sign in</a>
             </Link>
             <button type='submit' className={styles.signInBtn}>
-              {t('signin')}
+              Reset
             </button>
           </div>
           <div>
             <Link href='/create_account'>
-              <a>{t('create')}</a>
+              <a>Create an account</a>
             </Link>
           </div>
         </form>
@@ -80,7 +70,7 @@ export default function Form() {
             {isDarkMode ? <MdDarkMode fontSize={16} /> : <MdLightMode fontSize={16} />}
           </button>
           <div>
-            <select name='language' id='language' onChange={handleSelectChange}>
+            <select name='language' id='language'>
               <option value='en'>English</option>
               <option value='kr'>한국어</option>
             </select>
@@ -88,13 +78,13 @@ export default function Form() {
         </div>
         <div className={styles.linksContainer}>
           <Link href='/help'>
-            <a>{t('help')}</a>
+            <a>Help</a>
           </Link>
           <Link href='/privacy'>
-            <a>{t('privacy')}</a>
+            <a>Privacy</a>
           </Link>
           <Link href='/terms'>
-            <a>{t('terms')}</a>
+            <a>Terms</a>
           </Link>
         </div>
       </div>
