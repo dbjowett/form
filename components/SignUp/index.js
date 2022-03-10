@@ -3,9 +3,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Spinner } from '@chakra-ui/react';
 
-import styles from './form.module.css';
+import styles from './signUp.module.css';
 import { useState, useEffect } from 'react';
-import { MdDarkMode, MdLightMode, FaLanguage } from 'react-icons/md';
+import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import svg from '../../public/kidsloop_min_logo.svg';
 
 import useForm from '../../hooks/useForm';
@@ -46,6 +46,15 @@ export default function Form() {
             autoComplete='email'
           />
           {errors.emailPhone && <div className={styles.errors}>{errors.emailPhone}</div>}
+          <input
+            type='password'
+            placeholder={t('password')}
+            className={styles.password}
+            name='password'
+            value={inputs.password}
+            onChange={handleChange}
+            autoComplete='current-password'
+          />
           <input
             type='password'
             placeholder={t('password')}

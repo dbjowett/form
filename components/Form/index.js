@@ -84,7 +84,7 @@ export default function Form() {
           </button>
           <div className={styles.languageSwitchContainer}>
             {router.locale === 'kr' ? (
-              <Link href={'/'} locale='en' passHref>
+              <Link href={'/'} locale='en'>
                 English
               </Link>
             ) : (

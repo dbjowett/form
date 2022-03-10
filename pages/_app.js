@@ -1,5 +1,5 @@
-import { appWithTranslation } from 'next-i18next';
 import '../styles/globals.css';
+import { appWithTranslation } from 'next-i18next';
 import { ChakraProvider } from '@chakra-ui/react';
 
 function MyApp({ Component, pageProps }) {
