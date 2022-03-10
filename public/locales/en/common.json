@@ -5,8 +5,10 @@
   "forgot": "Forgot your password?",
   "email": "Email or Phone",
   "create": "Create an account",
+  "createHeader": "Create account",
   "help": "Help",
   "privacy": "Privacy",
   "terms": "Terms",
-  "password": "Password"
+  "password": "Password",
+  "password2": "Re-enter Password"
 }

@@ -16,5 +16,12 @@ export default function validateForm(inputs) {
     errors.password = 'Password must be between 6 and 18 characters.';
   }
 
+  console.log(inputs.password2.length);
+  if (inputs.password2.length !== 0) {
+    if (inputs.password !== inputs.password2) {
+      errors.password2 = 'Please make sure passwords match.';
+    }
+  }
+
   return errors;
 }

@@ -21,7 +21,6 @@ export default function Form() {
   const { handleChange, handleSubmit, inputs, errors } = useForm(setIsLoading, validateForm);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // CHANGE THEME
   useEffect(() => {
     let theme;
     isDarkMode ? (theme = 'dark') : (theme = 'light');
@@ -32,10 +31,13 @@ export default function Form() {
     <div>
       <div className={styles.formContainer}>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <div className={styles.imgContainer}>
-            <Image width={75} height={65} src={svg} alt='Logo' />
-          </div>
-          <h1 className={styles.title}>{t('signin')}</h1>
+          <Link href='/' passHref>
+            <div className={styles.imgContainer}>
+              <Image width={75} height={65} src={svg} alt='Logo' />
+            </div>
+          </Link>
+          <h1 className={styles.title}>{t('createHeader')}</h1>
+
           <input
             type='text'
             placeholder={t('email')}
@@ -55,23 +57,24 @@ export default function Form() {
             onChange={handleChange}
             autoComplete='current-password'
           />
+          {errors.password && <div className={styles.errors}>{errors.password}</div>}
           <input
             type='password'
-            placeholder={t('password')}
+            placeholder={t('password2')}
             className={styles.password}
-            name='password'
-            value={inputs.password}
+            name='password2'
+            value={inputs.password2}
             onChange={handleChange}
             autoComplete='current-password'
           />
-          {errors.password && <div className={styles.errors}>{errors.password}</div>}
+          {errors.password2 && <div className={styles.errors}>{errors.password2}</div>}
           <div className={styles.btnContainer}>
             <Link href='/forgot_password'>
               <a>{t('forgot')}</a>
             </Link>
             <button type='submit' className={styles.signInBtn} disabled={isLoading}>
               {!isLoading ? (
-                t('signin')
+                t('createHeader')
               ) : (
                 <div style={{ marginTop: '3px' }}>
                   <Spinner size='sm' />
@@ -80,8 +83,8 @@ export default function Form() {
             </button>
           </div>
           <div>
-            <Link href='/create_account'>
-              <a>{t('create')}</a>
+            <Link href='/'>
+              <a>{t('signin')}</a>
             </Link>
           </div>
         </form>
@@ -93,11 +96,11 @@ export default function Form() {
           </button>
           <div className={styles.languageSwitchContainer}>
             {router.locale === 'kr' ? (
-              <Link href={'/'} locale='en' passHref>
+              <Link href={'/create_account'} locale='en' passHref>
                 English
               </Link>
             ) : (
-              <Link href={'/'} locale='kr'>
+              <Link href={'/create_account'} locale='kr'>
                 한국어
               </Link>
             )}

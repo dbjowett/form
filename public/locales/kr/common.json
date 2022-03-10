@@ -5,8 +5,10 @@
   "forgot": "비밀번호 분실?",
   "email": "이메일 혹은 휴대폰 번호",
   "create": "회원가입",
+  "createHeader": "회원가입",
   "help": "고객센터",
   "privacy": "개인정보보호",
   "terms": "서비스약관",
-  "password": "비밀번호"
+  "password": "비밀번호",
+  "password2": "비밀번호 재입력"
 }

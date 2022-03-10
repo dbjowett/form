@@ -26,6 +26,7 @@ export default function Form() {
     let theme;
     isDarkMode ? (theme = 'dark') : (theme = 'light');
     document.body.dataset.theme = theme;
+    console.log(isDarkMode);
   }, [isDarkMode]);
 
   return (
