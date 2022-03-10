@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { useToast } from '@chakra-ui/react';
 
 export default function useForm(setIsLoading, validateForm) {
-  // const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
   const [inputs, setInputs] = useState({
     emailPhone: '',
     password: ''
@@ -22,7 +23,6 @@ export default function useForm(setIsLoading, validateForm) {
     e.preventDefault();
     setErrors(validateForm(inputs));
 
-    if (Object.keys(errors).length !== 0) return;
     const config = {
       method: 'PATCH',
       headers: {
@@ -32,14 +32,20 @@ export default function useForm(setIsLoading, validateForm) {
         }
       }
     };
+    if (Object.keys(errors).length !== 0) {
+      return;
+    }
     setIsLoading(true);
     const res = await fetch('https://my-json-server.typicode.com/kidsloop-test/accounts/sign-in', config);
     const data = await res.json();
     setIsLoading(false);
+    toast({ title: `Welcome, ${data.name}`, description: 'You are now signed in.', status: 'success', duration: 2000, isClosable: true });
+    setInputs({
+      emailPhone: '',
+      password: ''
+    });
     console.log(`Welcome, ${data.name}`);
   }
 
   return { handleChange, handleSubmit, inputs, errors };
 }
-
-// 19:45

@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { Spinner } from '@chakra-ui/react';
 
 import styles from './form.module.css';
 import { useState, useEffect } from 'react';
@@ -12,17 +14,12 @@ import validateForm from '../../utils/validateForm';
 import { useTranslation } from 'next-i18next';
 
 export default function Form() {
-  const {
-    t,
-    i18n: { changeLanguage }
-  } = useTranslation();
+  const router = useRouter();
+  const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
   const { handleChange, handleSubmit, inputs, errors } = useForm(setIsLoading, validateForm);
   const [isDarkMode, setIsDarkMode] = useState(false);
-
-  // CHANGE LANGUAGE
-  const handleSelectChange = (e) => changeLanguage(e.target.value);
 
   // CHANGE THEME
   useEffect(() => {
@@ -63,8 +60,14 @@ export default function Form() {
             <Link href='/forgot_password'>
               <a>{t('forgot')}</a>
             </Link>
-            <button type='submit' className={styles.signInBtn}>
-              {t('signin')}
+            <button type='submit' className={styles.signInBtn} disabled={isLoading}>
+              {!isLoading ? (
+                t('signin')
+              ) : (
+                <div style={{ marginTop: '3px' }}>
+                  <Spinner size='sm' />
+                </div>
+              )}
             </button>
           </div>
           <div>
@@ -79,11 +82,16 @@ export default function Form() {
           <button type='button' onClick={() => setIsDarkMode((prev) => !prev)}>
             {isDarkMode ? <MdDarkMode fontSize={16} /> : <MdLightMode fontSize={16} />}
           </button>
-          <div>
-            <select name='language' id='language' onChange={handleSelectChange}>
-              <option value='en'>English</option>
-              <option value='kr'>한국어</option>
-            </select>
+          <div className={styles.languageSwitchContainer}>
+            {router.locale === 'kr' ? (
+              <Link href={'/'} locale='en' passHref>
+                English
+              </Link>
+            ) : (
+              <Link href={'/'} locale='kr'>
+                한국어
+              </Link>
+            )}
           </div>
         </div>
         <div className={styles.linksContainer}>

@@ -9,9 +9,7 @@
   align-items: center;
   justify-content: center;
   padding: 24px;
-  box-shadow: 2.3px 2.3px 1.9px rgba(0, 0, 0, 0.01), 5.4px 5.3px 4.3px rgba(0, 0, 0, 0.015), 9.7px 9.5px 7.7px rgba(0, 0, 0, 0.018),
-    16.1px 15.7px 12.8px rgba(0, 0, 0, 0.022), 26.5px 25.9px 21.2px rgba(0, 0, 0, 0.025), 46.2px 45.3px 37px rgba(0, 0, 0, 0.03),
-    100px 98px 80px rgba(0, 0, 0, 0.04);
+  box-shadow: 0px 0px 20px 5px var(--card-shadow);
 }
 .form {
   border-radius: var(--border-radius);
@@ -22,6 +20,7 @@
 
 .form h1 {
   font-weight: 400;
+  color: var(--text-color) !important;
 }
 
 .form input {
@@ -82,6 +81,7 @@
 .darkLanguageContainer div select {
   border: none;
   background-color: inherit;
+  font-size: 0.8rem;
   margin-bottom: 5px;
   color: var(--secondary);
   border-radius: var(--border-radius);
@@ -94,6 +94,11 @@
   background-color: inherit;
   color: var(--text-color);
   cursor: pointer;
+}
+
+.languageSwitchContainer a {
+  font-size: 0.8rem;
+  color: var(--secondary);
 }
 
 .linksContainer {

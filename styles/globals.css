@@ -3,7 +3,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: var(--background-colour);
+  background-color: var(--background-colour) !important;
   font-size: 16px;
   color: var(--text-color);
   transition: all 0.25s ease-in-out;
@@ -28,7 +28,6 @@ a {
 
 :root {
   --border-radius: 12px;
-  /* --error: #ff0033; */
 }
 
 /* LIGHT MODE */

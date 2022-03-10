@@ -10,6 +10,7 @@ export default function Home() {
   );
 }
 
+// Setup for language translation
 export async function getServerSideProps({ locale }) {
   return {
     props: {

@@ -1,15 +1,22 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { Spinner } from '@chakra-ui/react';
 
-import styles from './signUp.module.css';
+import styles from './form.module.css';
 import { useState, useEffect } from 'react';
-import { MdDarkMode, MdLightMode } from 'react-icons/md';
+import { MdDarkMode, MdLightMode, FaLanguage } from 'react-icons/md';
 import svg from '../../public/kidsloop_min_logo.svg';
 
 import useForm from '../../hooks/useForm';
 import validateForm from '../../utils/validateForm';
 
-export default function SignUp() {
+import { useTranslation } from 'next-i18next';
+
+export default function Form() {
+  const router = useRouter();
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(false);
   const { handleChange, handleSubmit, inputs, errors } = useForm(setIsLoading, validateForm);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -28,10 +35,10 @@ export default function SignUp() {
           <div className={styles.imgContainer}>
             <Image width={75} height={65} src={svg} alt='Logo' />
           </div>
-          <h1 className={styles.title}>Sign up</h1>
+          <h1 className={styles.title}>{t('signin')}</h1>
           <input
             type='text'
-            placeholder='Email or Phone'
+            placeholder={t('email')}
             className={styles.email}
             name='emailPhone'
             value={inputs.emailPhone}
@@ -41,7 +48,7 @@ export default function SignUp() {
           {errors.emailPhone && <div className={styles.errors}>{errors.emailPhone}</div>}
           <input
             type='password'
-            placeholder='Password'
+            placeholder={t('password')}
             className={styles.password}
             name='password'
             value={inputs.password}
@@ -51,15 +58,21 @@ export default function SignUp() {
           {errors.password && <div className={styles.errors}>{errors.password}</div>}
           <div className={styles.btnContainer}>
             <Link href='/forgot_password'>
-              <a>Forgot your password?</a>
+              <a>{t('forgot')}</a>
             </Link>
-            <button type='submit' className={styles.signInBtn}>
-              Sign In
+            <button type='submit' className={styles.signInBtn} disabled={isLoading}>
+              {!isLoading ? (
+                t('signin')
+              ) : (
+                <div style={{ marginTop: '3px' }}>
+                  <Spinner size='sm' />
+                </div>
+              )}
             </button>
           </div>
           <div>
             <Link href='/create_account'>
-              <a>Create an account</a>
+              <a>{t('create')}</a>
             </Link>
           </div>
         </form>
@@ -69,22 +82,27 @@ export default function SignUp() {
           <button type='button' onClick={() => setIsDarkMode((prev) => !prev)}>
             {isDarkMode ? <MdDarkMode fontSize={16} /> : <MdLightMode fontSize={16} />}
           </button>
-          <div>
-            <select name='language' id='language'>
-              <option value='en'>English</option>
-              <option value='kr'>한국어</option>
-            </select>
+          <div className={styles.languageSwitchContainer}>
+            {router.locale === 'kr' ? (
+              <Link href={'/'} locale='en' passHref>
+                English
+              </Link>
+            ) : (
+              <Link href={'/'} locale='kr'>
+                한국어
+              </Link>
+            )}
           </div>
         </div>
         <div className={styles.linksContainer}>
           <Link href='/help'>
-            <a>Help</a>
+            <a>{t('help')}</a>
           </Link>
           <Link href='/privacy'>
-            <a>Privacy</a>
+            <a>{t('privacy')}</a>
           </Link>
           <Link href='/terms'>
-            <a>Terms</a>
+            <a>{t('terms')}</a>
           </Link>
         </div>
       </div>
