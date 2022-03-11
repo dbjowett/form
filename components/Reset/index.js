@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Spinner } from '@chakra-ui/react';
 
-import styles from './form.module.css';
+import styles from './reset.module.css';
 import { useState, useEffect } from 'react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import svg from '../../public/kidsloop_min_logo.svg';
@@ -13,12 +13,12 @@ import validateForm from '../../utils/validateForm';
 
 import { useTranslation } from 'next-i18next';
 
-export default function FormCopy({ type, title }) {
+export default function Reset() {
   const router = useRouter();
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
-  const { handleChange, handleSubmitSignIn, handleSubmitCreate, handleSubmitForgot, inputs, errors } = useForm(setIsLoading, validateForm);
+  const { handleChange, handleSubmitForgot, inputs, errors } = useForm(setIsLoading, validateForm);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   // CHANGE THEME
@@ -28,26 +28,17 @@ export default function FormCopy({ type, title }) {
     document.body.dataset.theme = theme;
   }, [isDarkMode]);
 
-  function onFormSubmit(e) {
-    if (type === 'signin') {
-      handleSubmitSignIn(e);
-    } else if (type === 'create') {
-      handleSubmitCreate(e);
-    } else if (type === 'forgot') {
-      handleSubmitForgot(e);
-    }
-  }
-
   return (
     <div>
+      {/* FORM START */}
       <div className={styles.formContainer}>
-        <form className={styles.form} onSubmit={(e) => onFormSubmit(e)}>
+        <form className={styles.form} onSubmit={handleSubmitForgot}>
           <Link href='/' passHref>
             <div className={styles.imgContainer}>
               <Image width={75} height={65} src={svg} alt='Logo' />
             </div>
           </Link>
-          <h1 className={styles.title}>{t(type)}</h1>
+          <h1 className={styles.title}>{t('forgot')}</h1>
           <input
             type='text'
             placeholder={t('email')}
@@ -58,35 +49,15 @@ export default function FormCopy({ type, title }) {
             autoComplete='email'
           />
           {errors.emailPhone && <div className={styles.errors}>{errors.emailPhone}</div>}
-          <input
-            type='password'
-            placeholder={t('password')}
-            className={styles.password}
-            name='password'
-            value={inputs.password}
-            onChange={handleChange}
-            autoComplete='current-password'
-          />
-          {errors.password && <div className={styles.errors}>{errors.password}</div>}
-          {type === 'create' && (
-            <input
-              type='password'
-              placeholder={t('password2')}
-              className={styles.password}
-              name='password2'
-              value={inputs.password2}
-              onChange={handleChange}
-              autoComplete='current-password'
-            />
-          )}
-          {errors.password2 && <div className={styles.errors}>{errors.password2}</div>}
+
+          {/* SUBMIT BUTTON */}
           <div className={styles.btnContainer}>
-            <Link href='/forgot_password'>
-              <a>{t('forgot')}</a>
+            <Link href='/'>
+              <a>{t('signin')}</a>
             </Link>
             <button type='submit' className={styles.signInBtn} disabled={isLoading}>
               {!isLoading ? (
-                t(type)
+                t('submit')
               ) : (
                 <div style={{ marginTop: '3px' }}>
                   <Spinner size='sm' />
@@ -94,19 +65,16 @@ export default function FormCopy({ type, title }) {
               )}
             </button>
           </div>
+          {/* LINKS */}
           <div>
-            {type === 'create' ? (
-              <Link href='/'>
-                <a>{t('signin')}</a>
-              </Link>
-            ) : (
-              <Link href='/create_account'>
-                <a>{t('create')}</a>
-              </Link>
-            )}
+            <Link href='/create_account'>
+              <a>{t('create')}</a>
+            </Link>
           </div>
         </form>
       </div>
+
+      {/* LINKS BELOW FORM */}
       <div className={styles.bottomContainer}>
         <div className={styles.darkLanguageContainer}>
           <button type='button' onClick={() => setIsDarkMode((prev) => !prev)}>

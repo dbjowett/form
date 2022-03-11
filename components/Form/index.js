@@ -13,12 +13,12 @@ import validateForm from '../../utils/validateForm';
 
 import { useTranslation } from 'next-i18next';
 
-export default function Form() {
+export default function FormCopy({ type, title }) {
   const router = useRouter();
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
-  const { handleChange, handleSubmitSignIn, inputs, errors } = useForm(setIsLoading, validateForm);
+  const { handleChange, handleSubmitSignIn, handleSubmitCreate, handleSubmitForgot, inputs, errors } = useForm(setIsLoading, validateForm);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   // CHANGE THEME
@@ -28,14 +28,20 @@ export default function Form() {
     document.body.dataset.theme = theme;
   }, [isDarkMode]);
 
+  function onFormSubmit(e) {
+    type === 'signin' ? handleSubmitSignIn(e) : handleSubmitCreate(e);
+  }
+
   return (
     <div>
       <div className={styles.formContainer}>
-        <form className={styles.form} onSubmit={handleSubmitSignIn}>
-          <div className={styles.imgContainer}>
-            <Image width={75} height={65} src={svg} alt='Logo' />
-          </div>
-          <h1 className={styles.title}>{t('signin')}</h1>
+        <form className={styles.form} onSubmit={(e) => onFormSubmit(e)}>
+          <Link href='/' passHref>
+            <div className={styles.imgContainer}>
+              <Image width={75} height={65} src={svg} alt='Logo' />
+            </div>
+          </Link>
+          <h1 className={styles.title}>{t(type)}</h1>
           <input
             type='text'
             placeholder={t('email')}
@@ -46,6 +52,7 @@ export default function Form() {
             autoComplete='email'
           />
           {errors.emailPhone && <div className={styles.errors}>{errors.emailPhone}</div>}
+
           <input
             type='password'
             placeholder={t('password')}
@@ -56,13 +63,27 @@ export default function Form() {
             autoComplete='current-password'
           />
           {errors.password && <div className={styles.errors}>{errors.password}</div>}
+          {type === 'create' && (
+            <input
+              type='password'
+              placeholder={t('password2')}
+              className={styles.password}
+              name='password2'
+              value={inputs.password2}
+              onChange={handleChange}
+              autoComplete='current-password'
+            />
+          )}
+          {errors.password2 && <div className={styles.errors}>{errors.password2}</div>}
+
+          {/* SUBMIT BUTTON */}
           <div className={styles.btnContainer}>
             <Link href='/forgot_password'>
               <a>{t('forgot')}</a>
             </Link>
             <button type='submit' className={styles.signInBtn} disabled={isLoading}>
               {!isLoading ? (
-                t('signin')
+                t(type)
               ) : (
                 <div style={{ marginTop: '3px' }}>
                   <Spinner size='sm' />
@@ -70,10 +91,17 @@ export default function Form() {
               )}
             </button>
           </div>
+          {/* LINKS */}
           <div>
-            <Link href='/create_account'>
-              <a>{t('create')}</a>
-            </Link>
+            {type === 'create' ? (
+              <Link href='/'>
+                <a>{t('signin')}</a>
+              </Link>
+            ) : (
+              <Link href='/create_account'>
+                <a>{t('create')}</a>
+              </Link>
+            )}
           </div>
         </form>
       </div>

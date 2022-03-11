@@ -33,7 +33,7 @@ export default function useForm(setIsLoading, validateForm) {
         }
       }
     };
-    if (Object.keys(errors).length !== 0) {
+    if (Object.keys(errors).length > 0) {
       return;
     } else {
       console.log(Object.keys(errors).length);
@@ -66,11 +66,11 @@ export default function useForm(setIsLoading, validateForm) {
         }
       }
     };
-    if (Object.keys(errors).length !== 0) {
+    if (Object.keys(errors).length > 0) {
       return;
     } else {
       setIsLoading(true);
-
+      console.log(Object.keys(errors).length);
       const res = await fetch('https://my-json-server.typicode.com/kidsloop-test/accounts/sign-up', config);
       const data = await res.json();
       setIsLoading(false);
@@ -98,11 +98,11 @@ export default function useForm(setIsLoading, validateForm) {
         }
       }
     };
-    if (Object.keys(errors).length !== 0) {
+    if (Object.keys(errors).length > 0) {
       return;
     } else {
       setIsLoading(true);
-
+      console.log(Object.keys(errors).length);
       const res = await fetch('https://my-json-server.typicode.com/kidsloop-test/accounts/reset-password', config);
       const data = await res.json();
       setIsLoading(false);
