@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Spinner } from '@chakra-ui/react';
 
-import styles from './signUp.module.css';
+import styles from './form.module.css';
 import { useState, useEffect } from 'react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import svg from '../../public/kidsloop_min_logo.svg';
@@ -13,31 +13,41 @@ import validateForm from '../../utils/validateForm';
 
 import { useTranslation } from 'next-i18next';
 
-export default function Form() {
+export default function FormCopy({ type, title }) {
   const router = useRouter();
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
-  const { handleChange, handleSubmit, inputs, errors } = useForm(setIsLoading, validateForm);
+  const { handleChange, handleSubmitSignIn, handleSubmitCreate, handleSubmitForgot, inputs, errors } = useForm(setIsLoading, validateForm);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  // CHANGE THEME
   useEffect(() => {
     let theme;
     isDarkMode ? (theme = 'dark') : (theme = 'light');
     document.body.dataset.theme = theme;
   }, [isDarkMode]);
 
+  function onFormSubmit(e) {
+    if (type === 'signin') {
+      handleSubmitSignIn(e);
+    } else if (type === 'create') {
+      handleSubmitCreate(e);
+    } else if (type === 'forgot') {
+      handleSubmitForgot(e);
+    }
+  }
+
   return (
     <div>
       <div className={styles.formContainer}>
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={(e) => onFormSubmit(e)}>
           <Link href='/' passHref>
             <div className={styles.imgContainer}>
               <Image width={75} height={65} src={svg} alt='Logo' />
             </div>
           </Link>
-          <h1 className={styles.title}>{t('createHeader')}</h1>
-
+          <h1 className={styles.title}>{t(type)}</h1>
           <input
             type='text'
             placeholder={t('email')}
@@ -58,15 +68,17 @@ export default function Form() {
             autoComplete='current-password'
           />
           {errors.password && <div className={styles.errors}>{errors.password}</div>}
-          <input
-            type='password'
-            placeholder={t('password2')}
-            className={styles.password}
-            name='password2'
-            value={inputs.password2}
-            onChange={handleChange}
-            autoComplete='current-password'
-          />
+          {type === 'create' && (
+            <input
+              type='password'
+              placeholder={t('password2')}
+              className={styles.password}
+              name='password2'
+              value={inputs.password2}
+              onChange={handleChange}
+              autoComplete='current-password'
+            />
+          )}
           {errors.password2 && <div className={styles.errors}>{errors.password2}</div>}
           <div className={styles.btnContainer}>
             <Link href='/forgot_password'>
@@ -74,7 +86,7 @@ export default function Form() {
             </Link>
             <button type='submit' className={styles.signInBtn} disabled={isLoading}>
               {!isLoading ? (
-                t('createHeader')
+                t(type)
               ) : (
                 <div style={{ marginTop: '3px' }}>
                   <Spinner size='sm' />
@@ -83,9 +95,15 @@ export default function Form() {
             </button>
           </div>
           <div>
-            <Link href='/'>
-              <a>{t('signin')}</a>
-            </Link>
+            {type === 'create' ? (
+              <Link href='/'>
+                <a>{t('signin')}</a>
+              </Link>
+            ) : (
+              <Link href='/create_account'>
+                <a>{t('create')}</a>
+              </Link>
+            )}
           </div>
         </form>
       </div>
@@ -96,11 +114,11 @@ export default function Form() {
           </button>
           <div className={styles.languageSwitchContainer}>
             {router.locale === 'kr' ? (
-              <Link href={'/create_account'} locale='en' passHref>
+              <Link href={'/'} locale='en'>
                 English
               </Link>
             ) : (
-              <Link href={'/create_account'} locale='kr'>
+              <Link href={'/'} locale='kr'>
                 한국어
               </Link>
             )}

@@ -18,7 +18,7 @@ export default function Form() {
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
-  const { handleChange, handleSubmit, inputs, errors } = useForm(setIsLoading, validateForm);
+  const { handleChange, handleSubmitSignIn, inputs, errors } = useForm(setIsLoading, validateForm);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   // CHANGE THEME
@@ -26,13 +26,12 @@ export default function Form() {
     let theme;
     isDarkMode ? (theme = 'dark') : (theme = 'light');
     document.body.dataset.theme = theme;
-    console.log(isDarkMode);
   }, [isDarkMode]);
 
   return (
     <div>
       <div className={styles.formContainer}>
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmitSignIn}>
           <div className={styles.imgContainer}>
             <Image width={75} height={65} src={svg} alt='Logo' />
           </div>
