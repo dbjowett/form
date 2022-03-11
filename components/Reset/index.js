@@ -34,7 +34,9 @@ export default function Reset() {
       <div className={styles.formContainer}>
         <form className={styles.form} onSubmit={handleSubmitForgot}>
           <Link href='/' passHref>
-            <Logo />
+            <div>
+              <Logo />
+            </div>
           </Link>
           <h1 className={styles.title}>{t('forgot')}</h1>
           <input
@@ -50,7 +52,7 @@ export default function Reset() {
 
           {/* SUBMIT BUTTON */}
           <div className={styles.btnContainer}>
-            <Link href='/'>
+            <Link href='/' passHref>
               <a>{t('signin')}</a>
             </Link>
             <button type='submit' className={styles.signInBtn} disabled={isLoading}>
@@ -65,7 +67,7 @@ export default function Reset() {
           </div>
           {/* LINKS */}
           <div>
-            <Link href='/create_account'>
+            <Link href='/create_account' passHref>
               <a>{t('create')}</a>
             </Link>
           </div>
@@ -93,13 +95,13 @@ export default function Reset() {
         </div>
         {/* HELP PRIVACY TERMS CONTAINER */}
         <div className={styles.linksContainer}>
-          <Link href='/help'>
+          <Link href='/help' passHref>
             <a>{t('help')}</a>
           </Link>
-          <Link href='/privacy'>
+          <Link href='/privacy' passHref>
             <a>{t('privacy')}</a>
           </Link>
-          <Link href='/terms'>
+          <Link href='/terms' passHref>
             <a>{t('terms')}</a>
           </Link>
         </div>

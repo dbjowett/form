@@ -17,7 +17,7 @@ export default function FormCopy({ type, title }) {
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
-  const { handleChange, handleSubmitSignIn, handleSubmitCreate, handleSubmitForgot, inputs, errors } = useForm(setIsLoading, useValidate);
+  const { handleChange, handleSubmitSignIn, handleSubmitCreate, inputs, errors } = useForm(setIsLoading, useValidate);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   // CHANGE THEME
@@ -37,7 +37,9 @@ export default function FormCopy({ type, title }) {
       <div className={styles.formContainer}>
         <form className={styles.form} onSubmit={(e) => onFormSubmit(e)}>
           <Link href='/' passHref>
-            <Logo />
+            <div>
+              <Logo />
+            </div>
           </Link>
           <h1 className={styles.title}>{t(type)}</h1>
           <input
@@ -76,7 +78,7 @@ export default function FormCopy({ type, title }) {
 
           {/* SUBMIT BUTTON */}
           <div className={styles.btnContainer}>
-            <Link href='/forgot_password'>
+            <Link href='/forgot_password' passHref>
               <a>{t('forgot')}</a>
             </Link>
             <button type='submit' className={styles.signInBtn} disabled={isLoading}>
@@ -92,11 +94,11 @@ export default function FormCopy({ type, title }) {
           {/* LINKS */}
           <div>
             {type === 'create' ? (
-              <Link href='/'>
+              <Link href='/' passHref>
                 <a>{t('signin')}</a>
               </Link>
             ) : (
-              <Link href='/create_account'>
+              <Link href='/create_account' passHref>
                 <a>{t('create')}</a>
               </Link>
             )}
@@ -129,7 +131,7 @@ export default function FormCopy({ type, title }) {
           <Link href='/privacy'>
             <a>{t('privacy')}</a>
           </Link>
-          <Link href='/terms'>
+          <Link href='/terms' passHref>
             <a>{t('terms')}</a>
           </Link>
         </div>
