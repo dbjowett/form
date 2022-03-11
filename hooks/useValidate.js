@@ -1,4 +1,4 @@
-export default function validateForm(inputs) {
+export default function useValidate(inputs) {
   let errors = {};
   const emailRegex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   const phoneRegex = /^[\+\d]?(?:[\d-.\s()]*)$/;

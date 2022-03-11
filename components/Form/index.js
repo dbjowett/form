@@ -1,24 +1,23 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { Spinner } from '@chakra-ui/react';
-
-import styles from './form.module.css';
 import { useState, useEffect } from 'react';
+
+import { Spinner } from '@chakra-ui/react';
+import styles from './form.module.css';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
-import svg from '../../public/kidsloop_min_logo.svg';
 
 import useForm from '../../hooks/useForm';
-import validateForm from '../../utils/validateForm';
+import useValidate from '../../hooks/useValidate';
 
 import { useTranslation } from 'next-i18next';
+import Logo from '../Logo';
 
 export default function FormCopy({ type, title }) {
   const router = useRouter();
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
-  const { handleChange, handleSubmitSignIn, handleSubmitCreate, handleSubmitForgot, inputs, errors } = useForm(setIsLoading, validateForm);
+  const { handleChange, handleSubmitSignIn, handleSubmitCreate, handleSubmitForgot, inputs, errors } = useForm(setIsLoading, useValidate);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   // CHANGE THEME
@@ -34,12 +33,11 @@ export default function FormCopy({ type, title }) {
 
   return (
     <div>
+      {/* FORM CONTAINER START */}
       <div className={styles.formContainer}>
         <form className={styles.form} onSubmit={(e) => onFormSubmit(e)}>
           <Link href='/' passHref>
-            <div className={styles.imgContainer}>
-              <Image width={75} height={65} src={svg} alt='Logo' />
-            </div>
+            <Logo />
           </Link>
           <h1 className={styles.title}>{t(type)}</h1>
           <input
@@ -110,6 +108,7 @@ export default function FormCopy({ type, title }) {
           <button type='button' onClick={() => setIsDarkMode((prev) => !prev)}>
             {isDarkMode ? <MdDarkMode fontSize={16} /> : <MdLightMode fontSize={16} />}
           </button>
+          {/* LANGUAGE SWITCH CONTAINER */}
           <div className={styles.languageSwitchContainer}>
             {router.locale === 'kr' ? (
               <Link href={'/'} locale='en'>
@@ -122,6 +121,7 @@ export default function FormCopy({ type, title }) {
             )}
           </div>
         </div>
+        {/* HELP PRIVACY TERMS CONTAINER */}
         <div className={styles.linksContainer}>
           <Link href='/help'>
             <a>{t('help')}</a>

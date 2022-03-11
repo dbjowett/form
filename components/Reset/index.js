@@ -1,16 +1,16 @@
 import Link from 'next/link';
-import Image from 'next/image';
+
+import Logo from '/components/Logo';
 import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 import { Spinner } from '@chakra-ui/react';
 
 import styles from './reset.module.css';
-import { useState, useEffect } from 'react';
+
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
-import svg from '../../public/kidsloop_min_logo.svg';
 
 import useForm from '../../hooks/useForm';
-import validateForm from '../../utils/validateForm';
-
+import useValidate from '../../hooks/useValidate';
 import { useTranslation } from 'next-i18next';
 
 export default function Reset() {
@@ -18,8 +18,8 @@ export default function Reset() {
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
-  const { handleChange, handleSubmitForgot, inputs, errors } = useForm(setIsLoading, validateForm);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const { handleChange, handleSubmitForgot, inputs, errors } = useForm(setIsLoading, useValidate);
 
   // CHANGE THEME
   useEffect(() => {
@@ -34,9 +34,7 @@ export default function Reset() {
       <div className={styles.formContainer}>
         <form className={styles.form} onSubmit={handleSubmitForgot}>
           <Link href='/' passHref>
-            <div className={styles.imgContainer}>
-              <Image width={75} height={65} src={svg} alt='Logo' />
-            </div>
+            <Logo />
           </Link>
           <h1 className={styles.title}>{t('forgot')}</h1>
           <input
@@ -80,6 +78,7 @@ export default function Reset() {
           <button type='button' onClick={() => setIsDarkMode((prev) => !prev)}>
             {isDarkMode ? <MdDarkMode fontSize={16} /> : <MdLightMode fontSize={16} />}
           </button>
+          {/* LANGUAGE SWITCH LINK */}
           <div className={styles.languageSwitchContainer}>
             {router.locale === 'kr' ? (
               <Link href={'/'} locale='en'>
@@ -92,6 +91,7 @@ export default function Reset() {
             )}
           </div>
         </div>
+        {/* HELP PRIVACY TERMS CONTAINER */}
         <div className={styles.linksContainer}>
           <Link href='/help'>
             <a>{t('help')}</a>
